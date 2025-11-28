@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+{% block header %}{{ product.name }}{% endblock %}
+
+{% block actions %}
+<div class="btn-group">
+    <a href="{% url 'product_update' product.pk %}" class="btn btn-sm btn-warning">Edit</a>
+    <a href="{% url 'product_delete' product.pk %}" class="btn btn-sm btn-danger">Delete</a>
+    <a href="{% url 'product_list' %}" class="btn btn-sm btn-secondary">Back to List</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Product Information</h5>
+                        <table class="table table-borderless">
+                            <tr>
+                                <th>Name:</th>
+                                <td>{{ product.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description:</th>
+                                <td>{{ product.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Price:</th>
+                                <td>${{ product.price }}</td>
+                            </tr>
+                            <tr>
+                                <th>Stock Quantity:</th>
+                                <td>
+                                    <span class="badge bg-{% if product.stock_quantity < 10 %}danger{% elif product.stock_quantity < 20 %}warning{% else %}success{% endif %}">
+                                        {{ product.stock_quantity }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Relations</h5>
+                        <table class="table table-borderless">
+                            <tr>
+                                <th>Category:</th>
+                                <td>{{ product.category.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Supplier:</th>
+                                <td>{{ product.supplier.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Added:</th>
+                                <td>{{ product.date_added|date:"M d, Y H:i" }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

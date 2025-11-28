@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete {{ object.name }}{% endblock %}
+{% block header %}Delete Supplier{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h4 class="text-danger mb-4">Confirm Deletion</h4>
+                <p>Are you sure you want to delete the supplier <strong>"{{ object.name }}"</strong>?</p>
+                <p class="text-muted">
+                    {% if object.product_set.count > 0 %}
+                    This supplier has {{ object.product_set.count }} product(s). Deleting it will remove these associations.
+                    {% endif %}
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'supplier_list' %}" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

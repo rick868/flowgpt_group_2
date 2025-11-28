@@ -14,7 +14,12 @@ class SupplierForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'stock_quantity', 'category', 'supplier']
+        fields = '__all__'
+
+    def _init_(self, *args, **kwargs):
+        super(ProductForm, self)._init_(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
 
 class CustomerForm(forms.ModelForm):
     class Meta:

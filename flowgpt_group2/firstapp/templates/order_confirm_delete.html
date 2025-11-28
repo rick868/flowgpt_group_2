@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Order #{{ object.id }}{% endblock %}
+{% block header %}Delete Order{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h4 class="text-danger mb-4">Confirm Deletion</h4>
+                <p>Are you sure you want to delete <strong>Order #{{ object.id }}</strong> for {{ object.customer.name }}?</p>
+                <p class="text-muted">
+                    Total: ${{ object.total_price }}<br>
+                    Status: {{ object.status }}<br>
+                    {% if object.orderitem_set.count > 0 %}
+                    This order has {{ object.orderitem_set.count }} item(s) that will also be deleted.
+                    {% endif %}
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'order_list' %}" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
